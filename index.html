@@ -1,0 +1,228 @@
+<!--
+
+  ab result ko pages me show karenge.
+  button  ko image se  replace kr rhe hai. 
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <title>Cricket Game</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+   
+    <h2>Bat Ball Stump Game</h2>
+
+    
+    <!--
+    ish chez ko utha kr copy paste kr denge jha pr bat likha hai button ke andher .iska ye matlab hai ki hame image ko button banana hai text ko nhi.
+     <img src="bat.png" alt="bat image" class="choice-image">
+      -->
+      
+    <!--bat-->
+    <button class="choice-button" onclick =
+     "
+    computerChoice = choice();
+    userMove='Bat';
+    result=generateResult();
+    displayresult(userMove,computerChoice,result);
+    "
+    ><img src="bat.png" alt="bat image" class="choice-image"></button>
+     
+    <!--ball-->
+
+    <button   class="choice-button"
+    onclick =
+    "
+     computerChoice = choice();
+     userMove='Ball';
+     result=generateResult();
+    displayresult(userMove,computerChoice,result);
+    "
+        > 
+        <img src="ball.png" alt="ball image" class="choice-image">
+      </button>
+
+    <button class="choice-button"
+    onclick =
+    "
+    computerChoice = choice();
+    userMove='Stump';
+    result=generateResult();
+    displayresult(userMove,computerChoice,result);
+    "
+    >
+    <img src="stump.png" alt="stump image" class="choice-image">
+  </button>
+
+   
+     
+ <h3 id="user-move"></h3>
+ <h3 id="computer-move"></h3>
+ <h3 id="result"></h3>
+ <h3 id="score"></h3>  
+
+ <button onclick="reseting()">Reset</button>
+<script>
+  //yha se old score le rha
+  let scoreStr=localStorage.getItem('Score');
+//   if(scoreStr!== undefined)
+//   {
+// score=JSON.parse(scoreStr);
+//   }  let do it in another way
+//agar old score hoga tho ye lega JSON.parse(scoreStr) nhi tho 0 0 0 lega.
+let score=JSON.parse(scoreStr) ||
+{
+win:0,
+lost:0,
+tie:0,
+
+};
+
+//yha : ke jagah = lagega
+score.displayscore = function()
+{
+return `No of matches Won:${score.win} Lost:${ score.lost} tie:${ score.tie}`;
+};
+
+  let computerChoice; // this variable before and outside funtion so it is a global variable
+  //this function is for choice of computer
+  function choice()
+  {
+    let random_number=Math.random()*3;
+    
+    if(random_number>0 && random_number<=1 )
+    {
+           computerChoice='Bat';
+          
+    }
+   else if(random_number>1 && random_number<=2 )
+    {
+           computerChoice='Ball';
+     }
+   else   
+    {
+         computerChoice='Stump';
+     }
+    return computerChoice;
+  }
+     
+ //this function is for result
+  let userMove;
+  function generateResult()
+  {
+    let computerMove=computerChoice;
+    if(userMove == 'Bat')
+    {
+          if(computerMove=='Bat')
+          {
+            score.tie++;
+            return 'its a draw';
+          }
+          else if(computerMove=='Ball')
+          {
+            score.win=score.win+1;
+           return 'you win';
+          }
+          else
+          {
+            score.lost+=1;
+return  'you loose';
+          }
+    }
+
+   else if(userMove=='Ball')
+    {
+       
+          if(computerMove=='Bat')
+          {
+            score.lost+=1;
+ return  'you loose';
+          }
+          else if(computerMove=='Ball')
+          {
+            score.tie++;
+return 'its a draw';
+          }
+          else
+          {
+            score.win=score.win+1;
+return  'you win';
+          }
+    }
+    else
+    {
+
+       
+          if(computerMove=='Bat')
+          {
+            score.win=score.win+1;
+ return  'you win';
+          }
+          else if(computerMove=='Ball')
+          {
+            score.lost+=1;
+return  'you loose';
+          }
+          else
+          {
+            score.tie++;
+return  'its a draw';
+          }
+    
+   
+        }     
+      }
+    //this function we will use for alert
+    let result;
+    
+    function displayresult(userMove, computerChoice,result)
+    {
+      //storing scores
+      localStorage.setItem('Score',JSON.stringify(score));
+
+      //yha se pages pr show hoga
+      document.querySelector('#user-move').innerText=`User Choice is ${userMove} .`;
+
+      document.querySelector('#computer-move').innerText=`Computer choice is ${computerChoice}. `;
+
+    document.querySelector('#result').
+    innerText=` ${result} `;
+
+   
+
+    document.querySelector('#score')
+    .innerText=`win:${score.win} loss:${score.lost} tie:${score.tie}`;
+
+      
+
+      
+   
+    }
+
+    function reseting() {
+    score.win = 0;
+    score.lost = 0;
+    score.tie = 0;
+    localStorage.clear();
+
+    document.querySelector('#user-move').innerText=``;
+
+document.querySelector('#computer-move').innerText="";
+
+document.querySelector('#result').
+innerText="";
+
+
+    document.querySelector('#score')
+    .innerText=`win:${score.win} loss:${score.lost} tie:${score.tie}`;
+
+    alert("Scores have been reset.");
+  }
+</script>
+   
+</body>
+</html>

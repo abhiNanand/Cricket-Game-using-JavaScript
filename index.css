@@ -1,0 +1,26 @@
+body{
+  text-align:center;
+}
+
+.choice-button
+{
+  width:100px;
+  height:100px;
+  border: 0;
+  border-radius: 50px;
+  background-color: rgb(143, 142, 224);
+  cursor: pointer;/*isey wha pr jb cursor le jayenge tho vo change hoga cursor icon.*/
+}
+
+.choice-image
+{
+  /*
+  images me height ya width me se ek chez chez define karna jada sahi hota hai
+  dono kr ne pr thik nhi dikhta. koi apex ration kharab hota hai image ka 
+  iseleye yha sirf height delcare kr ke chor deye hai.
+  tum khud se v try kar saktey ho dono ko define kr ke.*/
+
+  height:75px;
+  
+
+}
